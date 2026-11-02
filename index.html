@@ -155,6 +155,43 @@ drawWheel();
 
 const API_URL = "https://replica-collins-expenditures-cancer.trycloudflare.com";
 
+function animateToPrize(prize) { 
+    const matching = [];
+        
+    slices.forEach((s, index) => {
+        const value = parseInt(s.v, 10);
+        if (value === prize) matching.push(index);
+    });
+
+    if (!matching.length) {
+        throw new Error("Prize sector not found");
+    }
+
+    // Випадково обираємо сектор лише для візуальної зупинки.
+    const index = matching[Math.floor(Math.random() * matching.length)];
+
+    let start = -90;
+
+    for (let i = 0; i < index; i++) {
+        start += slices[i].a;
+    }
+
+    const sectorCenter = start + slices[index].a / 2;
+
+    // Верхня стрілка має вказувати на центр сектора.
+    const target = -90 - sectorCenter;
+
+    const current = ((rotation % 360) + 360) % 360;
+    const normalizedTarget = ((target % 360) + 360) % 360;
+
+    const extra = (normalizedTarget - current + 360) % 360;
+    const finalRotation = rotation + 360 * 6 + extra;
+
+    rotation = finalRotation;
+    canvas.style.transition = "transform 6.2s cubic-bezier(0.12, 0.75, 0.12, 1)";
+    canvas.style.transform = `rotate(${rotation}deg)`;
+}
+ 
 button.addEventListener("click", async () => {
     if (spinning) return;
 
@@ -197,7 +234,11 @@ button.addEventListener("click", async () => {
             return;
         }
 
-        result.textContent = `🎉 Твій приз: ${data.prize} грн! Бонуси зараховано!`;
+        animateToPrize(data.prize);
+     
+        setTimeout(() => {
+            result.textContent = 🎉 Твій приз: ${data.prize} грн! Бонуси зараховано!; 
+        }, 6200);
 
     } catch (error) {
         result.textContent = "❌ Сервер недоступний. Спробуй пізніше.";
