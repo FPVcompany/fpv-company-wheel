@@ -7,52 +7,131 @@
 <title>FPV COMPANY — Колесо фортуни</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;padding:28px 14px;
- background:radial-gradient(circle at top,#292929,#080808 70%);
- color:#fff;font-family:Arial,sans-serif;text-align:center
+ 
+body {
+    margin:0;
+    min-height:100vh;
+    padding:28px 14px;
+    background:radial-gradient(circle at 
+top,#292929,#080808 70%);
+    color:#fff;
+    font-family:Arial,sans-serif;
+    text-align:center;
 }
-.logo{color:#ed2929;font-size:14px;font-weight:900;letter-spacing:5px}
-h1{font-size:28px;margin:12px 0 7px;font-weight:900}
-.subtitle{color:#aaa;font-size:14px;margin-bottom:28px}
-.wheel-wrap{position:relative;width:min(88vw,390px);aspect-ratio:1;margin:0 auto 28px}
-.pointer{
- position:absolute;z-index:5;top:-12px;left:50%;transform:translateX(-50%);
- width:0;height:0;border-left:17px solid transparent;
- border-right:17px solid transparent;border-top:39px solid #f02b2b;
- filter:drop-shadow(0 3px 5px #000)
+ 
+.logo {
+    color:#ed2929;
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:5px;
 }
-canvas{
- display:block;width:100%;height:100%;border-radius:50%;
- border:7px solid #ddd;box-shadow:0 0 0 5px #292929,0 0 35px #e5232355
+ 
+h1 {
+    font-size:28px;
+    margin:12px 0 7px;
+    font-weight:900;
 }
-.spin{
- border:0;border-radius:12px;
- background:linear-gradient(135deg,#f02c2c,#991010);
- color:white;padding:17px 32px;font-size:17px;font-weight:900;
- letter-spacing:1px;box-shadow:0 5px 20px #e5232355
+
+.subtitle {
+    color:#aaa;
+    font-size:14px;
+    margin-bottom:28px;
 }
-.spin:disabled{opacity:.55}
-.result{
- margin:22px auto 0;padding:16px;max-width:350px;
- border:1px solid #444;border-radius:12px;background:#171717;
- color:#ddd;line-height:1.6
+ 
+.wheel-wrap {
+    position:relative;
+    width:min(88vw,390px);
+    aspect-ratio:1;
+    margin:0 auto 28px;
 }
-.prizes{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:9px;max-width:350px;margin:20px auto
+ 
+.pointer {
+    position:absolute;
+    z-index:5;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:17px solid transparent;
+    border-right:17px solid transparent;
+    border-top:39px solid #f02b2b;
+    filter:drop-shadow(0 3px 5px #000);
 }
-.prize{
- padding:11px 5px;background:#202020;border:1px solid #444;
- border-radius:9px;font-weight:bold;font-size:14px
+ 
+canvas {
+    display:block;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:7px solid #ddd;
+    box-shadow:0 0 0 5px #292929,0 0 35px #e5232355;
 }
-.prize small{display:block;color:#aaa;font-size:11px;margin-top:4px}
-.prize.gold{
- color:#ffd75a;border-color:#d9a928;
- background:linear-gradient(145deg,#49340b,#17120a);
- box-shadow:0 0 13px #d9a92844
+ 
+.spin {
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(135deg,#f02c2c,#991010);
+    color:white;
+    padding:17px 32px;
+    font-size:17px;
+    font-weight:900;
+    letter-spacing:1px;
+    box-shadow:0 5px 20px #e5232355;
 }
-.note{color:#777;font-size:11px;margin-top:22px}
+ 
+.spin:disabled {
+    opacity:.55;
+}
+ 
+.result {
+    margin:22px auto 0;
+    padding:16px;
+    max-width:350px;
+    border:1px solid #444;
+    border-radius:12px;
+    background:#171717;
+    color:#ddd;
+    line-height:1.6;
+}
+ 
+.prizes {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    max-width:350px;
+    margin:20px auto;
+}
+ 
+.prize {
+    padding:11px 5px;
+    background:#202020;
+    border:1px solid #444;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:14px;
+}
+ 
+.prize small {
+    display:block;
+    color:#aaa;
+    font-size:11px;
+    margin-top:4px;
+}
+ 
+.prize.gold {
+    color:#ffd75a;
+    border-color:#d9a928;
+    background:linear-gradient(145deg,#49340b,#17120a);
+    box-shadow:0 0 13px #d9a92844;
+}
+ 
+.note {
+    color:#777;
+    font-size:11px;
+    margin-top:22px;
+}
+ 
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -62,24 +141,24 @@ canvas{
 <div class="subtitle">Випробуй свою удачу!</div>
 
 <div class="wheel-wrap">
- <div class="pointer"></div>
- <canvas id="wheel" width="800" height="800"></canvas>
+    <div class="pointer"></div>
+    <canvas id="wheel" width="800" height="800"></canvas>
 </div>
 
 <button class="spin" id="spin">🎡 КРУТИТИ КОЛЕСО</button>
 
 <div class="result" id="result">
- 🎁 Обирай удачу!<br>
+    🎁 Обирай удачу!<br>
  Наступне справжнє обертання — раз на 7 днів
 </div>
 
 <div class="prizes">
- <div class="prize">1 грн<small>60% шанс</small></div>
- <div class="prize">2 грн<small>20% шанс</small></div>
- <div class="prize">5 грн<small>10% шанс</small></div>
- <div class="prize">10 грн<small>5% шанс</small></div>
- <div class="prize">50 грн<small>4% шанс</small></div>
- <div class="prize gold">★ 100 грн<small>1% шанс</small></div>
+    <div class="prize">1 грн<small>60% шанс</small></div>
+    <div class="prize">2 грн<small>20% шанс</small></div>
+    <div class="prize">5 грн<small>10% шанс</small></div>
+    <div class="prize">10 грн<small>5% шанс</small></div>
+    <div class="prize">50 грн<small>4% шанс</small></div>
+    <div class="prize gold">★ 100 грн<small>1% шанс</small></div>
 </div>
 
 <div class="note">РЕАЛЬНІ ПРИЗИ • БОНУСИ НАРАХОВУЮТЬСЯ НА БАЛАНС</div>
@@ -91,67 +170,67 @@ const button = document.getElementById("spin");
 const result = document.getElementById("result");
 
 const slices = [
- {v:"1 грн",a:43.2,c:"#a91e25"},
- {v:"1 грн",a:43.2,c:"#202020"},
- {v:"1 грн",a:43.2,c:"#a91e25"},
- {v:"1 грн",a:43.2,c:"#202020"},
- {v:"1 грн",a:43.2,c:"#a91e25"},
- {v:"2 грн",a:36,c:"#bd7b16"},
- {v:"2 грн",a:36,c:"#202020"},
- {v:"5 грн",a:18,c:"#a91e25"},
- {v:"5 грн",a:18,c:"#202020"},
- {v:"10 грн",a:18,c:"#bd7b16"},
- {v:"50 грн",a:14.4,c:"#202020"},
- {v:"100 грн",a:3.6,c:"#d4a72c"}
+    {v:"1 грн",a:43.2,c:"#a91e25"},
+    {v:"1 грн",a:43.2,c:"#202020"},
+    {v:"1 грн",a:43.2,c:"#a91e25"},
+    {v:"1 грн",a:43.2,c:"#202020"},
+    {v:"1 грн",a:43.2,c:"#a91e25"},
+    {v:"2 грн",a:36,c:"#bd7b16"},
+    {v:"2 грн",a:36,c:"#202020"},
+    {v:"5 грн",a:18,c:"#a91e25"},
+    {v:"5 грн",a:18,c:"#202020"},
+    {v:"10 грн",a:18,c:"#bd7b16"},
+    {v:"50 грн",a:14.4,c:"#202020"},
+    {v:"100 грн",a:3.6,c:"#d4a72c"}
 ];
 
 let rotation = 0;
 let spinning = false;
 
 function drawWheel(){
- const cx=400,cy=400,r=390;
- ctx.clearRect(0,0,800,800);
- let start=-Math.PI/2;
+    const cx=400,cy=400,r=390;
+    ctx.clearRect(0,0,800,800);
+    let start=-Math.PI/2;
 
- slices.forEach((s)=>{
-  const angle=s.a*Math.PI/180;
-  ctx.beginPath();
-  ctx.moveTo(cx,cy);
-  ctx.arc(cx,cy,r,start,start+angle);
-  ctx.closePath();
-  ctx.fillStyle=s.c;
-  ctx.fill();
-  ctx.strokeStyle="#eee";
-  ctx.lineWidth=3;
-  ctx.stroke();
+    slices.forEach((s)=>{
+        const angle=s.a*Math.PI/180;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,r,start,start+angle);
+        ctx.closePath();
+        ctx.fillStyle=s.c;
+        ctx.fill();
+        ctx.strokeStyle="#eee";
+        ctx.lineWidth=3;
+        ctx.stroke();
 
-  if(s.a>=14){
-   ctx.save();
-   ctx.translate(cx,cy);
-   ctx.rotate(start+angle/2);
-   ctx.textAlign="right";
-   ctx.textBaseline="middle";
-   ctx.fillStyle="#fff";
-   ctx.font="bold 25px Arial";
-   ctx.fillText(s.v,r-24,0);
-   ctx.restore();
-  }
-  start+=angle;
- });
+        if(s.a>=14){
+            ctx.save();
+            ctx.translate(cx,cy);
+            ctx.rotate(start+angle/2);
+            ctx.textAlign="right";
+            ctx.textBaseline="middle";
+            ctx.fillStyle="#fff";
+            ctx.font="bold 25px Arial";
+            ctx.fillText(s.v,r-24,0);
+            ctx.restore();
+        }
+        start+=angle;
+    });
 
- ctx.beginPath();
- ctx.arc(cx,cy,65,0,Math.PI*2);
- ctx.fillStyle="#111";
- ctx.fill();
- ctx.lineWidth=8;
- ctx.strokeStyle="#eee";
- ctx.stroke();
- ctx.fillStyle="#fff";
- ctx.textAlign="center";
- ctx.textBaseline="middle";
- ctx.font="bold 18px Arial";
- ctx.fillText("FPV",400,392);
- ctx.fillText("COMPANY",400,417);
+    ctx.beginPath();
+    ctx.arc(cx,cy,65,0,Math.PI*2);
+    ctx.fillStyle="#111";
+    ctx.fill();
+    ctx.lineWidth=8;
+    ctx.strokeStyle="#eee";
+    ctx.stroke();
+    ctx.fillStyle="#fff";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
+    ctx.font="bold 18px Arial";
+    ctx.fillText("FPV",400,392);
+    ctx.fillText("COMPANY",400,417);
 }
 
 drawWheel();
@@ -159,11 +238,11 @@ drawWheel();
 const API_URL = "https://replica-collins-expenditures-cancer.trycloudflare.com";
 
 function animateToPrize(prize) {
- const matching = [];
+    const matching = [];
 
- slices.forEach((s,index)=>{
-  if(parseInt(s.v,10)===prize) matching.push(index);
- });
+    slices.forEach((s,index)=>{
+        if(parseInt(s.v,10)===prize) matching.push(index);
+    });
 
  if(!matching.length) throw new Error("Prize sector not found");
 
@@ -187,53 +266,53 @@ function animateToPrize(prize) {
 
 const tg=window.Telegram?.WebApp;
 if(tg){
- tg.ready();
- tg.expand();
+    tg.ready();
+    tg.expand();
 }
 
 button.addEventListener("click",async()=>{
- if(spinning) return;
+    if(spinning) return;
 
- if(!tg || !tg.initData){
-  result.textContent="❌ Відкрий колесо через Telegram-бота.";
-  return;
- }
+    if(!tg || !tg.initData){
+        result.textContent="❌ Відкрий колесо через Telegram-бота.";
+        return;
+    }
 
  spinning=true;
  button.disabled=true;
  result.textContent="🎡 Отримуємо результат...";
 
  try{
-  const response=await fetch(`${API_URL}/spin`,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({initData:tg.initData})
+     const response=await fetch(`${API_URL}/spin`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({initData:tg.initData})
   });
 
   const data=await response.json();
 
   if(response.status===429){
-   result.textContent="⏳ Ти вже крутив колесо! Наступне обертання буде доступне через 7 днів.";
-   return;
+      result.textContent="⏳ Ти вже крутив колесо! Наступне обертання буде доступне через 7 днів.";
+      return;
   }
 
   if(!response.ok || !data.ok){
-   result.textContent="❌ "+(data.error || "Помилка сервера.");
-   return;
+      result.textContent="❌ "+(data.error || "Помилка сервера.");
+      return;
   }
 
   animateToPrize(Number(data.prize));
 
   setTimeout(()=>{
-   result.textContent=`🎉 Твій приз: ${data.prize} грн! Бонуси зараховано!`;
+      result.textContent=`🎉 Твій приз: ${data.prize} грн! Бонуси зараховано!`;
   },6300);
 
  }catch(error){
-  console.error(error);
-  result.textContent="❌ Помилка з'єднання або анімації. Перевір сервер.";
+     console.error(error);
+     result.textContent="❌ Помилка з'єднання або анімації. Перевір сервер.";
  }finally{
-  spinning=false;
-  button.disabled=false;
+     spinning=false;
+     button.disabled=false;
  }
 });
 </script>
