@@ -152,19 +152,53 @@ function drawWheel(){
 }
 drawWheel();
 
-button.addEventListener("click",()=>{
- if(spinning)return;
- spinning=true;
- button.disabled=true;
- result.textContent="🎡 Колесо обертається...";
- const extra=360*6+Math.random()*360;
- rotation+=extra;
- canvas.style.transform=`rotate(${rotation}deg)`;
- setTimeout(()=>{
-  spinning=false;
-  button.disabled=false;
-  result.textContent="Це було пробне обертання. Реальні призи підключимо через сервер.";
- },6200);
+const API_URL = "https://replica-collins-expenditures-cancer.trycloudflare.com";
+
+button.addEventListener("click", async () => {
+    if (spinning) return;
+
+    const tg = window.Telegram?.WebApp;
+
+    if (!tg || !tg.initData) {
+        result.textContent = "❌ Відкрий колесо через Telegram-бота.";
+        return;
+    }
+
+    spinning = true;
+    button.disabled = true;
+    result.textContent = "🎡 Отримуємо результат...";
+
+    try {
+        const response = await fetch(`${API_URL}/spin`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                initData: tg.initData
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.status === 429) {
+            result.textContent = "⏳ Ти вже крутив колесо. Наступне обертання буде доступне через 7 днів.";
+            return;
+        }
+
+        if (!response.ok || !data.ok) {
+            result.textContent = "❌ " + (data.error || "Помилка сервера.");
+            return;
+        }
+
+        result.textContent = `🎉 Твій приз: ${data.prize} грн! Бонуси зараховано!`;
+
+    } catch (error) {
+        result.textContent = "❌ Сервер недоступний. Спробуй пізніше.";
+    } finally {
+        spinning = false;
+        button.disabled = false;
+    }
 });
 </script>
 </body>
