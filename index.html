@@ -160,9 +160,14 @@ button.addEventListener("click", async () => {
 
     const tg = window.Telegram?.WebApp;
 
-    if (tg) {
-        tg.ready();
-        tg.expand();
+    if (!tg) {
+        result.textContent = "❌ Telegram WebApp API не завантажився.";
+       return;
+    }
+
+    if (!tg.initData) {
+        result.textContent = "❌ Telegram відкрив сторінку, але не передав initData.";
+        return;
     }
 
     spinning = true;
