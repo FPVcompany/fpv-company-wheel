@@ -54,6 +54,7 @@ canvas{
 }
 .note{color:#777;font-size:11px;margin-top:22px}
 </style>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <div class="logo">FPV COMPANY</div>
@@ -159,9 +160,9 @@ button.addEventListener("click", async () => {
 
     const tg = window.Telegram?.WebApp;
 
-    if (!tg || !tg.initData) {
-        result.textContent = "❌ Відкрий колесо через Telegram-бота.";
-        return;
+    if (tg) {
+        tg.ready();
+        tg.expand();
     }
 
     spinning = true;
